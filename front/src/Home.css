@@ -1,0 +1,105 @@
+.searchBar {
+    display:flex;
+    padding-left: 5px;
+    padding-right: 5px;
+    min-height: 40px;
+    justify-content: center;
+    margin-bottom: 100px;;
+   
+}
+
+.searchText {
+    text-align: center;
+    margin-top: 10%;
+    color: #014f86;
+}
+
+.apibar {
+    display:flex;
+    padding-left: 5px;
+    padding-right: 5px;
+    min-height: 20px;
+    
+    justify-content: center;
+    margin: auto;
+}
+
+.apiText {
+    text-align: center;
+    color:black;
+    font-weight: bold;;
+}
+
+.apiInput {
+    border: none;
+    background: none;
+    font-size: 12px;
+    outline: none;
+    align-items: center;
+    text-indent: 10px;
+    background-color: #f0efeb;
+    border-radius: 20px 0px 0px 20px;
+    width: 20%;
+}
+
+.regionSelect {
+    position: relative;
+    display: flex;
+    align-items: center;
+    color: black;
+    font-size: 12px;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    border-radius: 10px 0px 0px 10px;
+    background-color: #bee1e6;
+    font-weight: bold;
+    color: #000814;
+}
+
+.searchButton {
+    position: relative;
+    display: flex;
+    align-items: center;
+    color: black;
+    font-size: 12px;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background-color: white;
+    border-radius: 0px 10px 10px 0px;
+    background-color: #bee1e6;
+    font-weight: bold;
+    color: #000814;
+    text-decoration: none;
+    padding: 5px;
+}
+
+.inputText {
+    border: none;
+    background: none;
+    font-size: 12px;
+    outline: none;
+    align-items: center;
+    text-indent: 10px;
+    background-color: #f0efeb;
+    width: 20%;
+}
+
+.showapi {
+    position: relative;
+    display: flex;
+    align-items: center;
+    color: black;
+    font-size: 12px;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background-color: white;
+    border-radius: 0px 10px 10px 0px;
+    background-color: #bee1e6;
+    font-weight: bold;
+    color: #000814;
+    text-decoration: none;
+    padding: 5px;
+}
