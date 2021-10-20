@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import './Home.css'
 
-const Home = ({ setapiKey, setRegion, setName, region, name }) => {
+const Home = ({ setapiKey, setRegion, setName, region, name, apiKey }) => {
 
     return (
         <div>
@@ -40,6 +40,7 @@ const Home = ({ setapiKey, setRegion, setName, region, name }) => {
           <p className="apiText">Copy your Developer API Key Here</p>
           <div className="apibar" >
             <input onChange={() => {
+              
               setapiKey((document.getElementById("apiInput")).value)
             }} className="apiInput" id="apiInput" type="text" placeholder="Enter Developer API Key"></input>
             <button className="showapi" onClick={()=>{

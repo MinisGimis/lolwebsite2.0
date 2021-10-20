@@ -1,6 +1,7 @@
 import React from 'react'
 import Navbar from './Navbar';
 import Home from './Home'
+import Profile from './Profile';
 import { useState } from "react";
 import {
   BrowserRouter as Router,
@@ -20,19 +21,19 @@ function App() {
   })
 
   const [region, setRegion] = useState(() => {
-    return ("na")
+    return ("na1")
   })
 
 
   return (
     <Router>
       <div>
-        <Navbar />
+        <Navbar region={region} name={name} apiKey={apiKey}/>
 
         <Switch>
 
-          <Route path='/Profile'>
-            <h1>Profile</h1>
+          <Route path='/Profile/:region/:name'>
+            <Profile apiKey={apiKey}/>
           </Route>
 
           <Route path='/History'>
@@ -48,7 +49,7 @@ function App() {
           </Route>
 
           <Route path='/'>
-            <Home setapiKey={setapiKey} setRegion={setRegion} setName={setName} region={region} name={name}/>
+            <Home setapiKey={setapiKey} setRegion={setRegion} setName={setName} region={region} name={name} apiKey={apiKey}/>
             <button onClick={()=>{
               console.log(apiKey)
             }}>temp button to log api</button>
