@@ -28,13 +28,27 @@ const Profile = ({ apiKey }) => {
     useEffect(() =>{
             makeAPICall(region, name, apiKey)
     }, [])
+
+    if (playerInfo) {
+        return(
+            <div>
+                <h3>{playerInfo.name} {region}</h3>
+                <h4>Level {playerInfo.summonerLevel}</h4>
+                <img src={`http://ddragon.leagueoflegends.com/cdn/10.18.1/img/profileicon/${playerInfo.profileIconId}.png`}></img>
+            </div>
+        )
+    }
+
+    else {
+        console.log(playerInfo)
+        return (
+            <div className="error">
+                <h2>Error</h2>
+                <h3>Player not found, or API Key is incorrect</h3>
+            </div>
+        )
+    }
     
-    return (
-        <div>
-            <h3>{playerInfo.name} {region}</h3>
-            <h4>Level {playerInfo.summonerLevel}</h4>
-            <img src={`http://ddragon.leagueoflegends.com/cdn/10.18.1/img/profileicon/${playerInfo.profileIconId}.png`}></img>
-        </div>
-    )
+
 }
 export default Profile

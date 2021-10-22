@@ -1,8 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from './Navbar';
 import Home from './Home'
 import Profile from './Profile';
-import { useState } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -11,6 +10,7 @@ import {
 } from "react-router-dom";
 
 function App() {
+
 
   const [apiKey, setapiKey] = useState(() => {
     return(0)
