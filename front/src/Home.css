@@ -11,7 +11,7 @@
 .searchText {
     text-align: center;
     margin-top: 10%;
-    color: #014f86;
+    color: #03045e;
 }
 
 .apibar {
@@ -26,7 +26,7 @@
 
 .apiText {
     text-align: center;
-    color:black;
+    color:#03045e;
     font-weight: bold;;
 }
 
@@ -37,7 +37,7 @@
     outline: none;
     align-items: center;
     text-indent: 10px;
-    background-color: #f0efeb;
+    background-color: #f2f2f2;
     border-radius: 20px 0px 0px 20px;
     width: 20%;
 }
@@ -46,33 +46,43 @@
     position: relative;
     display: flex;
     align-items: center;
-    color: black;
+    color: #03045e;
     font-size: 12px;
     cursor: pointer;
     border: none;
     outline: none;
     border-radius: 10px 0px 0px 10px;
-    background-color: #bee1e6;
+    background-color: #90e0ef;
     font-weight: bold;
-    color: #000814;
 }
 
 .searchButton {
     position: relative;
     display: flex;
     align-items: center;
-    color: black;
+    color: 03045e;
     font-size: 12px;
     cursor: pointer;
     border: none;
     outline: none;
-    background-color: white;
     border-radius: 0px 10px 10px 0px;
-    background-color: #bee1e6;
+    background-color: #90e0ef;
     font-weight: bold;
     color: #000814;
     text-decoration: none;
     padding: 5px;
+}
+
+.searchButton:hover {
+    background-color: #caf0f8;
+}
+
+.regionSelect:hover {
+    background-color: #caf0f8;
+}
+
+.showapi:hover {
+    background-color: #caf0f8;
 }
 
 .inputText {
@@ -82,7 +92,7 @@
     outline: none;
     align-items: center;
     text-indent: 10px;
-    background-color: #f0efeb;
+    background-color: #f2f2f2;
     width: 20%;
 }
 
@@ -90,14 +100,13 @@
     position: relative;
     display: flex;
     align-items: center;
-    color: black;
+    color: 03045e;
     font-size: 12px;
     cursor: pointer;
     border: none;
     outline: none;
-    background-color: white;
     border-radius: 0px 10px 10px 0px;
-    background-color: #bee1e6;
+    background-color: #90e0ef;
     font-weight: bold;
     color: #000814;
     text-decoration: none;

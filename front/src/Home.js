@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import './Home.css'
 
-const Home = ({ setapiKey, setRegion, setName, region, name, apiKey }) => {
+const Home = ({ setData, setMasteryData, setapiKey, setRegion, setName, region, name, apiKey }) => {
 
     return (
         <div>
@@ -34,7 +34,11 @@ const Home = ({ setapiKey, setRegion, setName, region, name, apiKey }) => {
             <input id="inputText" className="inputText" placeholder="Enter Summoner Name" onChange={()=>{
                 setName(((document.getElementById("inputText")).value).toLowerCase())
             }}></input>
-            <Link to={`/Profile/${region}/${name}`}
+            <Link onClick={()=> {
+              console.log("Searched!")
+              setData(0)
+              setMasteryData(0)
+            }}to={`/Profile/${region}/${name}`}
             className="searchButton">Search</Link>
           </div>
           <p className="apiText">Copy your Developer API Key Here</p>

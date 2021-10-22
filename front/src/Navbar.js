@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import './Navbar.css'
 
-const Navbar = ({ region, name, apiKey }) => {
+const Navbar = ({ region, name, apiKey, data}) => {
 
 
 
