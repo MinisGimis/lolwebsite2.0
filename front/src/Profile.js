@@ -2,114 +2,110 @@ import { useParams } from "react-router"
 import { useEffect, useState } from "react";
 import './Profile.css'
 
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
-const Profile = ({ setData, setMasteryData, masteryData, data, apiKey }) => {
+const Profile = ({ apiKey, playerInfo, setPlayerInfo, masteryInfo, setMasteryInfo, getChampionName }) => {
 
-    const [playerInfo, setPlayerInfo] = useState(()=>{
-        return(0)
-    })
+    const [message, setMessage] = useState(() => {
+        return ('loading...');
+    });
 
-    const [masteryInfo, setMasteryInfo] = useState(() => {
-        return(0)
-    })
+    const username = sessionStorage.getItem('username');
+    const region = sessionStorage.getItem('region');
 
-    const [check, setCheck] = useState(() => {
-        return(0)
-    })
-
-
-    const getPlayerInfo = async (region, name, apiKey) => {
-        if (data === 0) {
-            try {
-            const response = await fetch(`https://${region}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${name}?api_key=${apiKey}`, {mode:'cors'});
-            const data = await response.json();
-            setPlayerInfo(data)
-            console.log(data)
-            }
-            catch (e) {
-            console.log(e)
-            }
-        }
-
-        else {
-            setPlayerInfo(data)
+    const getPlayerInfo = async(region, username, apiKey) => {
+        try {
+            await fetch(`https://${region}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${username}?api_key=${apiKey}`)
+            .then(res => {
+                return res.json()
+            })
+            .then((data) => {
+                setPlayerInfo(data);
+                setMessage("success");
+                console.log("player info")
+                console.log(data);
+            })
+        } catch (error) {
+            console.error(error);
+            setMessage("failed to load profile, please check your username/region/apikey again");
         }
     }
 
-    const getMasteryInfo = async (encryptedSummonerId, apiKey) => {
-        if (masteryData === 0) {
-            try {
-            const response = await fetch(`https://${region}.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/${encryptedSummonerId}?api_key=${apiKey}`, {mode:'cors'});
-            const data = await response.json();
-            setMasteryInfo(data)
-            setCheck(1)
-            console.log(data)
-            }
-            catch (e) {
-            console.log(e)
-            }
-        }
-
-        else {
-            setMasteryInfo(masteryData)
-            setCheck(1)
+    const getMasteryInfo = async(region, encryptedSummonerId, apiKey) => {
+        try {
+            fetch(`https://${region}.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/${encryptedSummonerId}?api_key=${apiKey}`)
+            .then(res => {
+                return res.json()
+            })
+            .then((data) => {
+                setMasteryInfo(data);
+                console.log("mastery info")
+                console.log(data);
+            })
+        } catch (error) {
+            console.error(error);
+            setMessage('failed to load mastery information');
         }
     }
 
-    const { region, name } = useParams()
+    //this runs once at the beginning and sets the playerInfo
+    useEffect(() => {
+        if (username && region && apiKey) {
+            if (!playerInfo || username != playerInfo.name.toLowerCase()) {
+                console.log(region);
+                console.log(username);
+                console.log(apiKey);
+                getPlayerInfo(region, username, apiKey);
+            }
+        } else {
+            setMessage("missing username/region/apikey");
+            document.getElementById('message').value = message;
 
+        }
+    }, []);
 
-    useEffect(() =>{
-        getPlayerInfo(region, name, apiKey)
-    }, [])
+    //this runs once at the beginning and reruns everytime playerInfo is updated
+    useEffect(() => {
+        //makes sure playerInfo exists
+        if (playerInfo) {
+            var encryptedSummonerId = playerInfo.id ? playerInfo.id : '';
+            getMasteryInfo(region, encryptedSummonerId, apiKey);
+        }
 
+    }, [playerInfo]);
 
     useEffect(() => {
-        if (playerInfo) {
-            getMasteryInfo(playerInfo.id, apiKey)
+        document.getElementById('message').innerText = message;
+        if (message === "success") {
+            document.getElementById('message').hidden = true;
         }
-    }, [playerInfo])
+    }, [message]);
 
-    function numberWithCommas(x) {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
-
-    if (check) {
-        setData(playerInfo)
-        setMasteryData(masteryInfo)
-        console.log(playerInfo)
-        return(
-            <div>
-                <div className='profileDisplay'>
-                    <h3>{playerInfo.name}</h3>
-                    <h4>LEVEL {playerInfo.summonerLevel}</h4>
-                    <img className="summonerIcon" src={`https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/profile-icons/${playerInfo.profileIconId}.jpg`}></img>
-                </div>
-                <div className='masteryDisplay'>
-                    {masteryInfo.map((champion) => (
-                        <div className="championList">
-                            <img className="championIcon" src={`https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champion-icons/${champion.championId}.png`}></img>
-                            <p className="championLevel">MASTERY {champion.championLevel}</p>
-                            <p className="championPoints">{numberWithCommas(champion.championPoints)} POINTS</p>
+    return(
+        <div>
+            {playerInfo && <div className='profileDisplay'>
+                <h3>{playerInfo.name}</h3>
+                <h4>LEVEL {playerInfo.summonerLevel}</h4>
+                <img className="summonerIcon" src={`https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/profile-icons/${playerInfo.profileIconId}.jpg`}></img>
+            </div>}
+            {masteryInfo && <div className='masteryDisplay'>
+                {masteryInfo.map((champion) => (
+                    <div title={getChampionName(champion.championId)} className="championList" >
+                        <div className="championInfo">
+                            <img className="championIcon" src={`https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champion-icons/${champion.championId}.png`}></img>      
+                            <div className="championLevel"><p>MASTERY {champion.championLevel}</p></div>
                         </div>
-                    ))
-                    }
-                </div>
-            </div>
-
-        )
-    }
-
-    else {
-
-        return (
-            <div className="error">
-                <h2>Error</h2>
-                <h3>Player not found, or API Key is incorrect</h3>
-            </div>
-        )
-    }
+                        <p className="championPoints">{numberWithCommas(champion.championPoints)}</p>
+                        <div><p className="championName">{getChampionName(champion.championId)}</p></div>
+                    </div>
+                ))}
+            </div>}
+            <span id="message"></span>
+        </div>
+    )
     
-
+    
 }
 export default Profile

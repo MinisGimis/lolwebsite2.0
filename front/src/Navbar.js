@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import './Navbar.css'
 
-const Navbar = ({ region, name, apiKey, data}) => {
+const Navbar = ({}) => {
 
 
 
@@ -17,9 +17,9 @@ const Navbar = ({ region, name, apiKey, data}) => {
             <nav>
               <div className="header">
                 <Link to ="/" className="link" >Home</Link>
-                <Link to ={`/Profile/${region}/${name}`} className="link" >Profile</Link>
-                <Link to ={`/History/${region}/${name}/${apiKey}`} className="link">History</Link>
-                <Link to ={`/Recent/${region}/${name}/${apiKey}`} className="link">Statistics</Link>
+                <Link to ={`/Profile`} className="link" >Profile</Link>
+                <Link to ={`/History`} className="link">History</Link>
+                <Link to ={`/Recent`} className="link">Statistics</Link>
                 <a href ="https://developer.riotgames.com" className="link"  target="_blank" rel="noopener noreferrer">API Key</a>
               </div>
             </nav>
