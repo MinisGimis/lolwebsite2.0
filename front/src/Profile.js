@@ -23,7 +23,7 @@ const Profile = ({ playerInfo, setPlayerInfo, masteryInfo, setMasteryInfo, getCh
             })
             .then((data) => {
                 setPlayerInfo(data);
-                setMessage("success");
+                setMessage("loading mastery info...");
                 console.log("player info")
                 console.log(data);
             })
@@ -41,6 +41,7 @@ const Profile = ({ playerInfo, setPlayerInfo, masteryInfo, setMasteryInfo, getCh
             })
             .then((data) => {
                 setMasteryInfo(data);
+                setMessage(null);
                 console.log("mastery info")
                 console.log(data);
             })
@@ -56,10 +57,11 @@ const Profile = ({ playerInfo, setPlayerInfo, masteryInfo, setMasteryInfo, getCh
             if (!playerInfo || username != playerInfo.name.toLowerCase()) {
                 setMasteryInfo(null);
                 getPlayerInfo(region, username, apiKey);
+            } else {
+                setMessage(null);
             }
         } else {
             setMessage("missing username/region/apikey");
-            document.getElementById('message').value = message;
         }
     }, []);
 
@@ -70,16 +72,11 @@ const Profile = ({ playerInfo, setPlayerInfo, masteryInfo, setMasteryInfo, getCh
             console.log("NEW MASTERY INFO");
             var encryptedSummonerId = playerInfo.id ? playerInfo.id : '';
             getMasteryInfo(region, encryptedSummonerId, apiKey);
+        } else {
+            setMessage(null);
         }
 
     }, [playerInfo]);
-
-    useEffect(() => {
-        document.getElementById('message').innerText = message;
-        if (message === "success") {
-            document.getElementById('message').hidden = true;
-        }
-    }, [message]);
 
     return(
         <div>
@@ -100,7 +97,7 @@ const Profile = ({ playerInfo, setPlayerInfo, masteryInfo, setMasteryInfo, getCh
                     </div>
                 ))}
             </div>}
-            <span id="message"></span>
+            {message && <span>{message}</span>}
         </div>
     )
     
