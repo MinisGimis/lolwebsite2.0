@@ -8,12 +8,13 @@ function numberWithCommas(x) {
 const Profile = ({ playerInfo, setPlayerInfo, masteryInfo, setMasteryInfo, getChampionName }) => {
 
     const [message, setMessage] = useState(() => {
-        return ('loading...');
+        return (null);
     });
 
     const username = sessionStorage.getItem('username');
     const region = sessionStorage.getItem('region');
     const apiKey = sessionStorage.getItem('apiKey');
+    const [playerIsLoaded, setPlayerIsLoaded] = useState(false);
 
     const getPlayerInfo = async(region, username, apiKey) => {
         try {
@@ -23,7 +24,7 @@ const Profile = ({ playerInfo, setPlayerInfo, masteryInfo, setMasteryInfo, getCh
             })
             .then((data) => {
                 setPlayerInfo(data);
-                setMessage("loading mastery info...");
+                setPlayerIsLoaded(true);
                 console.log("player info")
                 console.log(data);
             })
@@ -58,6 +59,7 @@ const Profile = ({ playerInfo, setPlayerInfo, masteryInfo, setMasteryInfo, getCh
                 setMasteryInfo(null);
                 getPlayerInfo(region, username, apiKey);
             } else {
+                setPlayerIsLoaded(true);
                 setMessage(null);
             }
         } else {
@@ -80,12 +82,12 @@ const Profile = ({ playerInfo, setPlayerInfo, masteryInfo, setMasteryInfo, getCh
 
     return(
         <div>
-            {playerInfo && <div className='profileDisplay'>
+            {playerIsLoaded && <div className='profileDisplay'>
                 <h3>{playerInfo.name}</h3>
                 <h4>LEVEL {playerInfo.summonerLevel}</h4>
                 <img className="summonerIcon" src={`https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/profile-icons/${playerInfo.profileIconId}.jpg`}></img>
             </div>}
-            {masteryInfo && <div className='masteryDisplay'>
+            {(playerIsLoaded && masteryInfo) && <div className='masteryDisplay'>
                 {masteryInfo.map((champion) => (
                     <div title={getChampionName(champion.championId)} className="championList" >
                         <div className="championInfo">
