@@ -13,10 +13,6 @@ import {
 
 function App() {
 
-  const [apiKey, setapiKey] =  useState((null));
-  const [playerInfo, setPlayerInfo] = useState((null));
-  const [masteryInfo, setMasteryInfo] = useState(null);
-
   const getChampionName = (championId) => {
     var championList = {
       266: "Aatrox",
@@ -179,10 +175,15 @@ function App() {
       142: "Zoe",
       143: "Zyra",
     }
-    
-
     return championList[championId];
   }
+
+  
+  const [playerInfo, setPlayerInfo] = useState((null));
+  const [masteryInfo, setMasteryInfo] = useState(null);
+  const [matches, setMatches] = useState([]);
+
+  //const apiKey = 'RGAPI-9caff5c8-3695-400a-aedd-1791f07da43b';
 
   return (
     <Router>
@@ -192,12 +193,13 @@ function App() {
         <Switch>
 
           <Route path='/Profile'>
-            <Profile apiKey={apiKey} playerInfo={playerInfo} setPlayerInfo={setPlayerInfo}
+            <Profile playerInfo={playerInfo} setPlayerInfo={setPlayerInfo}
             masteryInfo={masteryInfo} setMasteryInfo={setMasteryInfo} getChampionName={getChampionName}/>
           </Route>
 
           <Route path='/History'>
-            <History />
+            <History playerInfo={playerInfo} getChampionName={getChampionName}
+            matches={matches} setMatches={setMatches}/>
           </Route>
 
           <Route path='/Recent'>
@@ -209,7 +211,7 @@ function App() {
           </Route>
 
           <Route path='/'>
-            <Home setapiKey={setapiKey}apiKey={apiKey} />
+            <Home />
 
           </Route>
 

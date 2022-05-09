@@ -8,9 +8,12 @@ import {
 } from "react-router-dom";
 import './Home.css'
 
-const Home = ({ setapiKey, apiKey }) => {
+const Home = ({ }) => {
+
+  var apiKey;
 
   useEffect(() => {
+    var apiKey = sessionStorage.getItem('apiKey');
     if (apiKey) {
       document.getElementById('apiInput').value = apiKey;
     }
@@ -39,9 +42,9 @@ const Home = ({ setapiKey, apiKey }) => {
         <input id="inputText" className="inputText" placeholder="Enter Summoner Name"></input>
         <Link 
           onClick={()=> {
-            setapiKey((document.getElementById("apiInput")).value);
             sessionStorage.setItem('region', (document.getElementById("regionSelect")).value);
-            sessionStorage.setItem('username', (document.getElementById('inputText').value));
+            sessionStorage.setItem('username', (document.getElementById('inputText').value).toLowerCase());
+            sessionStorage.setItem('apiKey', document.getElementById("apiInput").value);
           }}to={`/Profile`}
           className="searchButton">Search
         </Link>

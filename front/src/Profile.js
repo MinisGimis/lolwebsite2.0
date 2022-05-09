@@ -1,4 +1,3 @@
-import { useParams } from "react-router"
 import { useEffect, useState } from "react";
 import './Profile.css'
 
@@ -6,7 +5,7 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-const Profile = ({ apiKey, playerInfo, setPlayerInfo, masteryInfo, setMasteryInfo, getChampionName }) => {
+const Profile = ({ playerInfo, setPlayerInfo, masteryInfo, setMasteryInfo, getChampionName }) => {
 
     const [message, setMessage] = useState(() => {
         return ('loading...');
@@ -14,6 +13,7 @@ const Profile = ({ apiKey, playerInfo, setPlayerInfo, masteryInfo, setMasteryInf
 
     const username = sessionStorage.getItem('username');
     const region = sessionStorage.getItem('region');
+    const apiKey = sessionStorage.getItem('apiKey');
 
     const getPlayerInfo = async(region, username, apiKey) => {
         try {
@@ -54,22 +54,20 @@ const Profile = ({ apiKey, playerInfo, setPlayerInfo, masteryInfo, setMasteryInf
     useEffect(() => {
         if (username && region && apiKey) {
             if (!playerInfo || username != playerInfo.name.toLowerCase()) {
-                console.log(region);
-                console.log(username);
-                console.log(apiKey);
+                setMasteryInfo(null);
                 getPlayerInfo(region, username, apiKey);
             }
         } else {
             setMessage("missing username/region/apikey");
             document.getElementById('message').value = message;
-
         }
     }, []);
 
     //this runs once at the beginning and reruns everytime playerInfo is updated
     useEffect(() => {
         //makes sure playerInfo exists
-        if (playerInfo) {
+        if (playerInfo && !masteryInfo) {
+            console.log("NEW MASTERY INFO");
             var encryptedSummonerId = playerInfo.id ? playerInfo.id : '';
             getMasteryInfo(region, encryptedSummonerId, apiKey);
         }
