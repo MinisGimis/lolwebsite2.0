@@ -1,0 +1,43 @@
+.statistics .profileDisplay {
+    text-align: center;
+    font-size: x-large;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.statisticsDisplay {
+    justify-content: center;
+    display: flex;
+    text-align: center
+}
+
+.queueType {
+    width: 40%;
+    justify-content: center;
+    border-top-width: 2px;
+    border-color: #ade8f4;
+    border-top-style: solid;
+}
+
+.winsAndLosses {
+    text-align: center
+}
+
+.rankInfo {
+    display: flex;
+    justify-content: center;
+}
+
+.rankLp {
+    margin-left: 10px;
+}
+
+.rankRank {
+    margin-left: 5px
+}
+
+.queueType:first-child {
+    border-right-width: 2px;
+    border-color: #ade8f4;
+    border-right-style: solid;   
+}

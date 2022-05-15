@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 const History = ({playerInfo, getChampionName, matches, setMatches}) => {
 
     const nextRegion = (region) => {
+        return ('americas');
+
         if (region === 'americas') {
             return ('asia');
         } else if (region === 'asia') {
@@ -36,37 +38,41 @@ const History = ({playerInfo, getChampionName, matches, setMatches}) => {
             })
         } catch (error) {
             console.error(error);
+            setErrorMessage("failed to get match list info");
+            /*
             if (region != 'europe') {
                 getMatchHistoryList(nextRegion(region), puuid, apiKey);
             } else {
                 setErrorMessage("failed to get match list info");
             }
+            */
         }
     }
 
     const getMatchInfo = async(region, matchId) => {
         try {
-            await fetch(`https://${region}.api.riotgames.com/lol/match/v5/matches/${matchId}?api_key=${apiKey}`)
+            await fetch(`https://americas.api.riotgames.com/lol/match/v5/matches/${matchId}?api_key=${apiKey}`)
             .then(res => {
                 return res.json()
             })
             .then((data) => {
                 //fix this so that it appends element to end of the array. Doesnt work because array is a react hook
-                setMatches(matches.concat([{
+                setMatches([{
                     gameEndTimeStamp: data.info.gameEndTimeStamp,
                     gameMode: data.info.gameMode,
                     gameType: data.info.gameType,
-                }]))
-                console.log("match info")
-                console.log(data);
+                    }]);
             })
         } catch (error) {
             console.error(error);
+            /*
             if (region != 'europe') {
                 getMatchInfo(nextRegion(region), matchId);
             } else {
                 setErrorMessage("failed to get match info");
             }
+            */
+            setErrorMessage("failed to get match info");
         }        
     }
 
@@ -82,7 +88,7 @@ const History = ({playerInfo, getChampionName, matches, setMatches}) => {
             }  
         }
     }, [])
-/*
+
     useEffect(() => {
         if (matchHistoryList && apiKey && matches.length == 0) {
             matchHistoryList.forEach(matchId => {
@@ -90,11 +96,13 @@ const History = ({playerInfo, getChampionName, matches, setMatches}) => {
                 getMatchInfo(region, matchId);
             })
         }
+        console.log("matches");
         console.log(matches);
     }, [matchHistoryList])
-*/
+
 
     useEffect(() => {
+        console.log("matches...");
         console.log(matches);
     }, [matches])
     

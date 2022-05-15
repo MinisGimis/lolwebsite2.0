@@ -180,6 +180,7 @@ function App() {
 
   
   const [playerInfo, setPlayerInfo] = useState((null));
+  const [statisticInfo, setStatisticInfo] = useState(null);
   const [masteryInfo, setMasteryInfo] = useState(null);
   const [matches, setMatches] = useState([]);
 
@@ -203,7 +204,8 @@ function App() {
           </Route>
 
           <Route path='/Recent'>
-            <Statistics />
+            <Statistics playerInfo={playerInfo} getChampionName={getChampionName} statisticInfo={statisticInfo}
+            setStatisticInfo={setStatisticInfo}/>
           </Route>
 
           <Route path='/API'>
